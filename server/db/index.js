@@ -33,9 +33,11 @@ const checkDBConn = async () => {
 };
 
 const User = sequelize.import('./models/user');
+const Project = sequelize.import('./models/user');
 
 module.exports = {
     sequelize,
     checkDBConn,
     User,
+    Project,
 }

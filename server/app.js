@@ -1,17 +1,15 @@
 require('dotenv').config()
 const express = require('express');
-const {checkDBConn, User} = require('./db');
-
-try {
-    checkDBConn();
-} catch(err) {
-    console.error('Unable to connect to the database:', err);
-}
+const bodyParser = require('body-parser');
+const {errorHandler} = require('./middlewares');
+const routes = require('./routes');
 
 const app = express();
 
-app.listen(process.env.APP_PORT, () => console.log('App listening on port ' + process.env.APP_PORT));
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json());
 
-User.findAll()
-    .then((users) => console.log(users))
-    .catch((err) => console.error(err));
+app.use('/api', routes);
+app.use(errorHandler);
+
+app.listen(process.env.APP_PORT, () => console.log('App listening on port ' + process.env.APP_PORT));
