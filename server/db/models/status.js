@@ -1,17 +1,17 @@
 const Sequelize = require('sequelize');
 
-module.exports = (sequelize, DataTypes) => {
+module.exports = (sequelize) => {
 
-    class Project extends Sequelize.Model {}
+    class Status extends Sequelize.Model {}
 
-    Project.init({
+    Status.init({
         name: Sequelize.STRING,
         description: Sequelize.STRING,
     }, {
         sequelize,
         freezeTableName: true,
-        tableName: 'Projects',
+        tableName: 'Statuses',
     });
 
-    return Project;
+    return Status;
 }
