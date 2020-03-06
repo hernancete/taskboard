@@ -1,4 +1,12 @@
 
+const notFound = (req, res) => {
+    return res.status(404).json({
+        message: 'Not found',
+        requestedMethod: req.method,
+        requestedUrl: req.url,
+    });
+};
+
 const errorHandler = (err, req, res, next) => {
     res.status(res.statusCode || 500);
     res.json({
@@ -8,5 +16,6 @@ const errorHandler = (err, req, res, next) => {
 };
 
 module.exports = {
+    notFound,
     errorHandler,
 };

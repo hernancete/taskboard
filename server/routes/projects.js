@@ -1,9 +1,9 @@
 const routes = require('express').Router();
-const {Project} = require('../db');
+const { Projects } = require('../models');
 
 routes.get('/', async (req, res, next) => {
     try {
-        let projects = await Project.findAll();
+        let projects = await Projects.findAll();
         return res.status(200).json(projects);
     }
     catch (err) {
@@ -13,7 +13,7 @@ routes.get('/', async (req, res, next) => {
 
 routes.post('/', async (req, res, next) => {
     try {
-        let project = await Project.create(req.body);
+        let project = await Projects.create(req.body);
         return res.status(200).json(project);
     }
     catch (err) {
@@ -23,7 +23,7 @@ routes.post('/', async (req, res, next) => {
 
 routes.delete('/:id', async (req, res, next) => {
     try {
-        let project = await Project.findByPk(req.params['id']);
+        let project = await Projects.findByPk(req.params['id']);
         if (project) {
             await project.destroy();
             return res.status(200).json(project);

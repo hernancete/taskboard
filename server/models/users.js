@@ -1,14 +1,10 @@
-const Sequelize = require('sequelize');
-
 module.exports = (sequelize, DataTypes) => {
 
-    class User extends Sequelize.Model {}
-
-    User.init({
-        name: Sequelize.STRING,
-        lastName: Sequelize.STRING,
+    const Users = sequelize.define('Users', {
+        name: DataTypes.STRING,
+        lastName: DataTypes.STRING,
         email: {
-            type: Sequelize.STRING,
+            type: DataTypes.STRING,
             validate: {
                 isEmail: true,
             },
@@ -25,5 +21,9 @@ module.exports = (sequelize, DataTypes) => {
         ],
     });
 
-    return User;
+    // Users.associate = (models) => {
+    //     Users.belongsToMany(models.Projects, {as: 'Projects', through: 'UserProjects', foreignKey: 'projectId'});
+    // };
+
+    return Users;
 }
