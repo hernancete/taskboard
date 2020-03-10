@@ -1,9 +1,10 @@
 require('dotenv').config()
 const express = require('express');
 const bodyParser = require('body-parser');
-const { notFound, errorHandler } = require('./middlewares');
+const { notFound, errorHandler, checkUser } = require('./middlewares');
 
 const db = require('./models');
+const auth = require('./auth');
 const routes = require('./routes');
 
 const app = express();
@@ -11,6 +12,8 @@ const app = express();
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
+app.use('/auth', auth);
+app.use(checkUser);
 app.use('/api', routes);
 app.use(notFound);
 app.use(errorHandler);
