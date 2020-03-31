@@ -21,6 +21,21 @@ routes.post('/', async (req, res, next) => {
     }
 });
 
+routes.put('/:id', async (req, res, next) => {
+    try {
+        let project = await Projects.findByPk(req.params['id']);
+        if (project) {
+            await project.update(req.body);
+            return res.status(200).json(project);
+        }
+        res.status(404);
+        throw new Error('Project not found');
+    }
+    catch (err) {
+        next(err);
+    }
+});
+
 routes.delete('/:id', async (req, res, next) => {
     try {
         let project = await Projects.findByPk(req.params['id']);
