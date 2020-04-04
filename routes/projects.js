@@ -3,7 +3,7 @@ const { Projects } = require('../models');
 
 routes.get('/', async (req, res, next) => {
     try {
-        let projects = await Projects.findAll();
+        let projects = await Projects.findAll({ where: req.query });
         return res.status(200).json(projects);
     }
     catch (err) {
