@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
     Tasks.associate = (models) => {
         Tasks.belongsTo(models.Projects, {foreignKey: 'projectId'});
         Tasks.belongsTo(models.Users, {foreignKey: 'userId'});
-        Tasks.belongsTo(models.Statuses, {foreignKey: 'statusId'});
+        Tasks.belongsTo(models.Statuses, {foreignKey: 'statusId', as: 'status'});
     }
 
     return Tasks;

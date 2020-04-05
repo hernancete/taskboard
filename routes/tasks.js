@@ -1,19 +1,30 @@
 const routes = require('express').Router();
-const { Tasks } = require('../models');
+const { Tasks, Statuses } = require('../models');
 
 routes.get('/', async (req, res, next) => {
     try {
-        let tasks = await Tasks.findAll({where: req.query});
+        let tasks = await Tasks.findAll({
+            where: req.query,
+            include: [{
+                model: Statuses,
+                as: 'status',
+            }],
+        });
         return res.status(200).json(tasks);
     }
     catch (err) {
+        res.status(500);
         next(err);
     }
 });
 
 routes.post('/', async (req, res, next) => {
     try {
-        let task = await Tasks.create(req.body);
+        let data = Object.assign({}, req.body);
+        if (!data.statusId) {
+            data.statusId = 1;
+        }
+        let task = await Tasks.create(data);
         return res.status(200).json(task);
     }
     catch (err) {
